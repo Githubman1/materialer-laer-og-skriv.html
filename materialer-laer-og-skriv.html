@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materialer - Lær og Skriv</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+            line-height: 1.8;
+            font-size: 20px;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 1.6em;
+            margin-bottom: 10px;
+            color: #4ecdc4;
+        }
+        
+        .intro {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+        
+        .progress {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            height: 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            background: #4ecdc4;
+            height: 100%;
+            transition: width 0.5s;
+        }
+        
+        /* LÆRE-BOKS */
+        .laer-boks {
+            background: linear-gradient(135deg, #0f3460, #16213e);
+            border: 3px solid #4ecdc4;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .laer-tittel {
+            color: #4ecdc4;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .laer-tittel::before {
+            content: "📖";
+            font-size: 1.2em;
+        }
+        
+        .fakta {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #00d9a0;
+        }
+        
+        .fakta-viktig {
+            color: #00d9a0;
+            font-weight: bold;
+        }
+        
+        /* SKRIV-BOKS */
+        .skriv-boks {
+            background: rgba(233, 69, 96, 0.1);
+            border: 3px solid #e94560;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .skriv-tittel {
+            color: #e94560;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .skriv-tittel::before {
+            content: "✏️";
+            font-size: 1.2em;
+        }
+        
+        .start-setning {
+            background: rgba(78, 205, 196, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-style: italic;
+            border: 2px dashed #4ecdc4;
+        }
+        
+        .skriv-her {
+            width: 100%;
+            min-height: 80px;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #4ecdc4;
+            background: rgba(0,0,0,0.3);
+            color: #fff;
+            font-size: 18px;
+            font-family: inherit;
+            resize: vertical;
+        }
+        
+        .skriv-her:focus {
+            outline: none;
+            border-color: #00d9a0;
+            background: rgba(0,0,0,0.5);
+        }
+        
+        /* MATERIALER GRID */
+        .material-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .material-kort {
+            background: rgba(0,0,0,0.4);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .material-kort .emoji {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .material-kort .navn {
+            font-weight: bold;
+            color: #4ecdc4;
+            font-size: 1.1em;
+        }
+        
+        .egenskap {
+            font-size: 0.9em;
+            color: #aaa;
+            margin-top: 8px;
+        }
+        
+        .yes { color: #00d9a0; }
+        .no { color: #e94560; }
+        
+        /* TABELL */
+        .tabell {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .tabell th {
+            background: #4ecdc4;
+            color: #000;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .tabell td {
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .tabell input {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 16px;
+        }
+        
+        .tabell input:focus {
+            outline: 2px solid #4ecdc4;
+        }
+        
+        /* KNAPPER */
+        .neste-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: #4ecdc4;
+            border: none;
+            color: #000;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .neste-btn:hover {
+            background: #5df5e5;
+        }
+        
+        .vis-eksempel {
+            background: transparent;
+            border: 2px solid #aaa;
+            color: #aaa;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+        
+        .vis-eksempel:hover {
+            border-color: #00d9a0;
+            color: #00d9a0;
+        }
+        
+        .eksempel-svar {
+            background: rgba(0, 217, 160, 0.15);
+            border: 2px solid #00d9a0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .eksempel-svar.show { display: block; }
+        
+        .hidden { display: none; }
+        
+        /* ATOM VISUELL */
+        .atom-bilde {
+            text-align: center;
+            font-size: 4em;
+            margin: 20px 0;
+        }
+        
+        .sammenligning {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .sammenligning > div {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .ferdig-boks {
+            background: linear-gradient(135deg, #00d9a0, #4ecdc4);
+            padding: 30px;
+            border-radius: 15px;
+            color: #000;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .ferdig-boks h2 {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- DEL 1: MATERIALER -->
+        <div id="del1">
+            <h1>🔧 Del 1: Materialer</h1>
+            <div class="progress"><div class="progress-bar" style="width: 20%"></div></div>
+            
+            <!-- LÆRE -->
+            <div class="laer-boks">
+                <div class="laer-tittel">Dette skal du lære</div>
+                
+                <div class="fakta">
+                    <span class="fakta-viktig">Alt rundt deg er laget av materialer.</span><br>
+                    Det finnes fire hovedtyper:
+                </div>
+                
+                <div class="material-grid">
+                    <div class="material-kort">
+                        <span class="emoji">🔩</span>
+                        <span class="navn">METALL</span>
+                        <div class="egenskap">
+                            <span class="yes">✓ Leder strøm</span><br>
+                            <span class="yes">✓ Sterkt</span>
+                        </div>
+                    </div>
+                    <div class="material-kort">
+                        <span class="emoji">🧴</span>
+                        <span class="navn">PLAST</span>
+                        <div class="egenskap">
+                            <span class="no">✗ Leder ikke strøm</span><br>
+                            <span class="yes">✓ Lett og billig</span>
+                        </div>
+                    </div>
+                    <div class="material-kort">
+                        <span class="emoji">🪵</span>
+                        <span class="navn">TRE</span>
+                        <div class="egenskap">
+                            <span class="no">✗ Leder ikke strøm</span><br>
+                            <span class="no">✗ Kan brenne</span>
+                        </div>
+                    </div>
+                    <div class="material-kort">
+                        <span class="emoji">🪟</span>
+                        <span class="navn">GLASS</span>
+                        <div class="egenskap">
+                            <span class="yes">✓ Gjennomsiktig</span><br>
+                            <span class="no">✗ Knuses lett</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fakta">
+                    <span class="fakta-viktig">Husk:</span> Metall leder strøm. Plast, tre og glass gjør IKKE det.
+                </div>
+            </div>
+            
+            <!-- SKRIV -->
+            <div class="skriv-boks">
+                <div class="skriv-tittel">Nå skal du skrive</div>
+                
+                <p><strong>Oppgave 1:</strong> Se deg rundt i rommet. Finn 3 ting og skriv hva de er laget av:</p>
+                
+                <table class="tabell">
+                    <tr>
+                        <th>Ting jeg ser</th>
+                        <th>Materiale</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="F.eks: Stol"></td>
+                        <td><input type="text" placeholder="F.eks: Metall og plast"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="Skriv her..."></td>
+                        <td><input type="text" placeholder="Skriv her..."></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="Skriv her..."></td>
+                        <td><input type="text" placeholder="Skriv her..."></td>
+                    </tr>
+                </table>
+                
+                <p style="margin-top: 20px;"><strong>Oppgave 2:</strong> Hvilket materiale leder strøm?</p>
+                <div class="start-setning">Det materialet som leder strøm er...</div>
+                <textarea class="skriv-her" placeholder="Skriv her..."></textarea>
+                
+                <button class="vis-eksempel" onclick="visEksempel(this)">Se eksempel</button>
+                <div class="eksempel-svar">
+                    <strong>Eksempel:</strong> "Det materialet som leder strøm er metall."
+                </div>
+            </div>
+            
+            <button class="neste-btn" onclick="gaTil(2)">Neste del: Atomer →</button>
+        </div>
+        
+        <!-- DEL 2: ATOMER -->
+        <div id="del2" class="hidden">
+            <h1>⚛️ Del 2: Atomer</h1>
+            <div class="progress"><div class="progress-bar" style="width: 40%"></div></div>
+            
+            <!-- LÆRE -->
+            <div class="laer-boks">
+                <div class="laer-tittel">Dette skal du lære</div>
+                
+                <div class="atom-bilde">⚛️</div>
+                
+                <div class="fakta">
+                    <span class="fakta-viktig">Atomer er små byggeklosser.</span><br>
+                    Alt er laget av atomer. Du. Bordet. Lufta. Alt.
+                </div>
+                
+                <div class="fakta">
+                    <span class="fakta-viktig">Tenk på LEGO:</span><br>
+                    🧱 Ulike klosser = ulike atomer<br>
+                    🧱 Sett sammen = et materiale
+                </div>
+                
+                <div class="fakta">
+                    <span class="fakta-viktig">Ulike atomer = ulike egenskaper:</span><br>
+                    • Jern-atomer → sterkt metall<br>
+                    • Gull-atomer → ruster aldri<br>
+                    • Kobber-atomer → leder strøm godt
+                </div>
+            </div>
+            
+            <!-- SKRIV -->
+            <div class="skriv-boks">
+                <div class="skriv-tittel">Nå skal du skrive</div>
+                
+                <p><strong>Oppgave 3:</strong> Hva er et atom?</p>
+                <div class="start-setning">Et atom er...</div>
+                <textarea class="skriv-her" placeholder="Skriv her..."></textarea>
+                
+                <button class="vis-eksempel" onclick="visEksempel(this)">Se eksempel</button>
+                <div class="eksempel-svar">
+                    <strong>Eksempel:</strong> "Et atom er en liten byggekloss. Alt er laget av atomer."
+                </div>
+                
+                <p style="margin-top: 25px;"><strong>Oppgave 4:</strong> Hvorfor er gull dyrt?</p>
+                <div class="start-setning">Gull er dyrt fordi gull-atomer...</div>
+                <textarea class="skriv-her" placeholder="Skriv her..."></textarea>
+                
+                <button class="vis-eksempel" onclick="visEksempel(this)">Se eksempel</button>
+                <div class="eksempel-svar">
+                    <strong>Eksempel:</strong> "Gull er dyrt fordi gull-atomer ikke ruster. Gull varer evig."
+                </div>
+            </div>
+            
+            <button class="neste-btn" onclick="gaTil(3)">Neste del: Bindinger →</button>
+        </div>
+        
+        <!-- DEL 3: BINDINGER -->
+        <div id="del3" class="hidden">
+            <h1>🔗 Del 3: Bindinger</h1>
+            <div class="progress"><div class="progress-bar" style="width: 60%"></div></div>
+            
+            <!-- LÆRE -->
+            <div class="laer-boks">
+                <div class="laer-tittel">Dette skal du lære</div>
+                
+                <div class="fakta">
+                    <span class="fakta-viktig">Binding = hvordan atomer sitter sammen</span><br><br>
+                    <span style="font-size: 1.5em;">⚛️ — ⚛️</span><br>
+                    Streken er bindingen.
+                </div>
+                
+                <div class="sammenligning">
+                    <div>
+                        <div style="font-size: 2em;">💪</div>
+                        <strong style="color: #00d9a0;">STERKE BINDINGER</strong>
+                        <p>Atomer sitter HARDT sammen</p>
+                        <p>= Hardt materiale</p>
+                        <p style="color: #aaa;">Diamant, metall</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 2em;">🤝</div>
+                        <strong style="color: #f39c12;">SVAKE BINDINGER</strong>
+                        <p>Atomer sitter LØST sammen</p>
+                        <p>= Mykt/flytende</p>
+                        <p style="color: #aaa;">Vann, olje</p>
+                    </div>
+                </div>
+                
+                <div class="fakta">
+                    <span class="fakta-viktig">Eksempel: Is og vann</span><br>
+                    🧊 Is → sterke bindinger → hardt<br>
+                    💧 Vann → svakere bindinger → flytende<br>
+                    Varme gjør bindingene svakere!
+                </div>
+            </div>
+            
+            <!-- SKRIV -->
+            <div class="skriv-boks">
+                <div class="skriv-tittel">Nå skal du skrive</div>
+                
+                <p><strong>Oppgave 5:</strong> Hva er en binding?</p>
+                <div class="start-setning">En binding er...</div>
+                <textarea class="skriv-her" placeholder="Skriv her..."></textarea>
+                
+                <button class="vis-eksempel" onclick="visEksempel(this)">Se eksempel</button>
+                <div class="eksempel-svar">
+                    <strong>Eksempel:</strong> "En binding er hvordan atomer sitter sammen."
+                </div>
+                
+                <p style="margin-top: 25px;"><strong>Oppgave 6:</strong> Hvorfor er diamant så hardt?</p>
+                <div class="start-setning">Diamant er hardt fordi...</div>
+                <textarea class="skriv-her" placeholder="Skriv her..."></textarea>
+                
+                <button class="vis-eksempel" onclick="visEksempel(this)">Se eksempel</button>
+                <div class="eksempel-svar">
+                    <strong>Eksempel:</strong> "Diamant er hardt fordi atomene har sterke bindinger. De sitter veldig hardt sammen."
+                </div>
+                
+                <p style="margin-top: 25px;"><strong>Oppgave 7:</strong> Hva skjer når is smelter?</p>
+                <div class="start-setning">Når is smelter...</div>
+                <textarea class="skriv-her" placeholder="Skriv her..."></textarea>
+                
+                <button class="vis-eksempel" onclick="visEksempel(this)">Se eksempel</button>
+                <div class="eksempel-svar">
+                    <strong>Eksempel:</strong> "Når is smelter blir bindingene svakere. Atomene sitter ikke så hardt sammen lenger."
+                </div>
+            </div>
+            
+            <button class="neste-btn" onclick="gaTil(4)">Neste del: Bruk kunnskapen →</button>
+        </div>
+        
+        <!-- DEL 4: BRUKE KUNNSKAPEN -->
+        <div id="del4" class="hidden">
+            <h1>🔧 Del 4: Bruk kunnskapen</h1>
+            <div class="progress"><div class="progress-bar" style="width: 80%"></div></div>
+            
+            <!-- LÆRE -->
+            <div class="laer-boks">
+                <div class="laer-tittel">Nå kan du bruke det du har lært</div>
+                
+                <div class="fakta">
+                    <span class="fakta-viktig">Stekepanne:</span><br>
+                    🍳 Bunnen = metall (leder varme)<br>
+                    ✋ Håndtaket = plast (leder IKKE varme)
+                </div>
+                
+                <div class="fakta">
+                    <span class="fakta-viktig">Elektrisk ledning:</span><br>
+                    ⚡ Inni = kobber (leder strøm)<br>
+                    🧴 Utenpå = plast (beskytter deg)
+                </div>
+                
+                <div class="fakta">
+                    <span class="fakta-viktig">Rust på bil:</span><br>
+                    🚗 Jern + oksygen = rust<br>
+                    🎨 Derfor maler vi biler - stopper atomene fra å møtes
+                </div>
+            </div>
+            
+            <!-- SKRIV -->
+            <div class="skriv-boks">
+                <div class="skriv-tittel">Nå skal du skrive</div>
+                
+                <p><strong>Oppgave 8:</strong> Du skal lage en stekepanne. Hva bruker du?</p>
+                <table class="tabell">
+                    <tr>
+                        <th>Del</th>
+                        <th>Materiale</th>
+                        <th>Hvorfor?</th>
+                    </tr>
+                    <tr>
+                        <td>Bunnen</td>
+                        <td><input type="text" placeholder="?"></td>
+                        <td><input type="text" placeholder="Fordi..."></td>
+                    </tr>
+                    <tr>
+                        <td>Håndtaket</td>
+                        <td><input type="text" placeholder="?"></td>
+                        <td><input type="text" placeholder="Fordi..."></td>
+                    </tr>
+                </table>
+                
+                <p style="margin-top: 25px;"><strong>Oppgave 9:</strong> Hvorfor ruster biler?</p>
+                <div class="start-setning">Biler ruster fordi...</div>
+                <textarea class="skriv-her" placeholder="Skriv her..."></textarea>
+                
+                <button class="vis-eksempel" onclick="visEksempel(this)">Se eksempel</button>
+                <div class="eksempel-svar">
+                    <strong>Eksempel:</strong> "Biler ruster fordi jern-atomer binder seg til oksygen i lufta."
+                </div>
+                
+                <p style="margin-top: 25px;"><strong>Oppgave 10:</strong> Hvorfor maler vi biler?</p>
+                <div class="start-setning">Vi maler biler fordi...</div>
+                <textarea class="skriv-her" placeholder="Skriv her..."></textarea>
+                
+                <button class="vis-eksempel" onclick="visEksempel(this)">Se eksempel</button>
+                <div class="eksempel-svar">
+                    <strong>Eksempel:</strong> "Vi maler biler fordi malingen stopper oksygen fra å møte jernet."
+                </div>
+            </div>
+            
+            <button class="neste-btn" onclick="gaTil(5)">Neste: Oppsummering →</button>
+        </div>
+        
+        <!-- DEL 5: OPPSUMMERING -->
+        <div id="del5" class="hidden">
+            <h1>📝 Del 5: Oppsummering</h1>
+            <div class="progress"><div class="progress-bar" style="width: 100%"></div></div>
+            
+            <div class="laer-boks">
+                <div class="laer-tittel">Dette har du lært</div>
+                
+                <div class="fakta">1. Alt er laget av <strong>materialer</strong> (metall, plast, tre, glass)</div>
+                <div class="fakta">2. Materialer er laget av <strong>atomer</strong> (små byggeklosser)</div>
+                <div class="fakta">3. Atomer sitter sammen med <strong>bindinger</strong></div>
+                <div class="fakta">4. Sterke bindinger = hardt materiale</div>
+                <div class="fakta">5. Metall leder strøm og varme. Plast gjør ikke.</div>
+            </div>
+            
+            <div class="skriv-boks">
+                <div class="skriv-tittel">Siste oppgave</div>
+                
+                <p><strong>Skriv 3 ting du har lært:</strong></p>
+                
+                <div class="start-setning">1. Jeg har lært at...</div>
+                <textarea class="skriv-her" placeholder="Skriv her..."></textarea>
+                
+                <div class="start-setning">2. Jeg har lært at...</div>
+                <textarea class="skriv-her" placeholder="Skriv her..."></textarea>
+                
+                <div class="start-setning">3. Jeg har lært at...</div>
+                <textarea class="skriv-her" placeholder="Skriv her..."></textarea>
+            </div>
+            
+            <div class="ferdig-boks">
+                <h2>🎉 Bra jobba!</h2>
+                <p>Du har lært om materialer, atomer og bindinger.</p>
+                <p>Vis oppgavene til læreren.</p>
+            </div>
+            
+            <button class="neste-btn" onclick="gaTil(1)" style="margin-top: 20px; background: #e94560;">↺ Start på nytt</button>
+        </div>
+        
+    </div>
+    
+    <script>
+        function gaTil(n) {
+            document.querySelectorAll('[id^="del"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById('del' + n).classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+        
+        function visEksempel(btn) {
+            const eksempel = btn.nextElementSibling;
+            eksempel.classList.toggle('show');
+            btn.textContent = eksempel.classList.contains('show') ? 'Skjul eksempel' : 'Se eksempel';
+        }
+    </script>
+</body>
+</html>
